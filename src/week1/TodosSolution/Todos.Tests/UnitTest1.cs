@@ -1,17 +1,18 @@
-﻿using Todos.Api.Utils;
+﻿using Microsoft.CodeAnalysis;
+using Todos.Api.Utils;
 
 namespace Todos.Tests;
 
 public class UnitTest1
 {
     [Fact] // Attributes (@Fact())
-    public void CanFormatAName()
+    public void CanFormatBobSmithsName()
     {
         // Given
         string firstName = "Bob", lastName = "Smith", fullName;
-
-
         // When
+
+
         fullName = Formatters.FormatName(firstName, lastName);
 
         // Then 
@@ -24,9 +25,9 @@ public class UnitTest1
     public void CanFormatAnyName(string firstName, string lastName, string expecting)
     {
         var fullName = Formatters.FormatName(firstName, lastName);
-        var thingy = new Formatters();
 
-        //Assert.True(Formatters.IsLongName(fullName));
+
+        Assert.True(Formatters.IsLongName(fullName));
         Assert.Equal(expecting, fullName);
     }
 }

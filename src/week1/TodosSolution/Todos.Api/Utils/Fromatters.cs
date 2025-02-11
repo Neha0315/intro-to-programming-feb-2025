@@ -8,5 +8,8 @@ public class Formatters
         return $"{lastName}, {firstName}";
     }
 
-    
+    public static bool IsLongName(string name)
+    {
+        return name.Length > 10;
+    }
 }
