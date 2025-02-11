@@ -14,11 +14,24 @@ builder.Services.AddMarten(builder =>
     builder.Connection(connectionString);
 });
 
+builder.Services.AddCors(pol =>
+{
+    // this is demo code - refer to your local authorities here.
+    pol.AddDefaultPolicy(c =>
+    {
+        c.AllowAnyHeader();
+        c.AllowAnyMethod();
+        c.AllowAnyOrigin();
+    });
+});
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
 // above this line is configuration for the services inside our application
 var app = builder.Build();
+
+app.UseCors();
 // after this line is configuration for how HTTP requests and responses and handled.
 
 // Configure the HTTP request pipeline.
