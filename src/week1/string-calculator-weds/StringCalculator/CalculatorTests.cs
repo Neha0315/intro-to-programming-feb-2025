@@ -23,6 +23,10 @@ public class CalculatorTests
     [InlineData("1,2,3,4,5,6,7,8,9", 45)]
     [InlineData("1 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ", 45)]
 
+    [InlineData("1\n2", 3)]
+    [InlineData("1\n2,3", 6)]
+
+
     public void SingleDigit(string value, int expected)
     {
         var calculator = new Calculator();

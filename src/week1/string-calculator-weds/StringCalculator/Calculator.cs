@@ -17,12 +17,18 @@ public class Calculator
         //everything else
         else
         {
-            if (numbers.Contains(","))
+            if (numbers.Contains(',') || numbers.Contains("\n"))
             {
                 //better to separate all the numbers by the commas
                 //add to array of strings
                 string[] values = numbers.Split(',');
-
+                
+                if(numbers.Contains("\n"))
+                {
+                    string[] values2 = numbers.Split("\n");
+                    values = values2;
+                }
+               
                 //total sum count
                 int totalSum = 0;
 
