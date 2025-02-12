@@ -45,8 +45,29 @@ public class GettingTodos
 
         Assert.NotNull(listOfTodos);
 
-        var hasMyItem = listOfTodos.Any(item => item.Description == itemToAdd.Description);
+        bool found = false;
 
-        Assert.True(hasMyItem);
+        // format code same as for each element, if any element has the condition after arrow
+        // var hasMyItem = listOfTodos.Any(item => item.Description == itemToAdd.Description);
+
+        //dot net static; run quickly 
+        //can't chnage the type when running 
+        //uses classes, object or grouping or related things 
+
+        //don't know ahead of time; oop ways to codify to make concepts more concrete
+        //change as we go
+
+        // Fewer elements (less "stuff")
+        foreach(TodoListItem item in listOfTodos) 
+        {
+            if (item.Description == itemToAdd.Description)
+            {
+                found = true;
+                break;
+            }
+                
+        }
+
+        Assert.True(found);
     }
 }
