@@ -1,4 +1,6 @@
-﻿using Microsoft.CodeAnalysis;
+﻿
+
+using Microsoft.CodeAnalysis;
 using Todos.Api.Utils;
 
 namespace Todos.Tests;
@@ -10,9 +12,10 @@ public class UnitTest1
     {
         // Given
         string firstName = "Bob", lastName = "Smith", fullName;
+      
         // When
 
-
+        
         fullName = Formatters.FormatName(firstName, lastName);
 
         // Then 
@@ -24,8 +27,9 @@ public class UnitTest1
     [InlineData("Luke", "Skywalker", "Skywalker, Luke")]
     public void CanFormatAnyName(string firstName, string lastName, string expecting)
     {
+        
         var fullName = Formatters.FormatName(firstName, lastName);
-
+       
 
         Assert.True(Formatters.IsLongName(fullName));
         Assert.Equal(expecting, fullName);

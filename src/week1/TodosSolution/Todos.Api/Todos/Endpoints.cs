@@ -12,6 +12,7 @@ public static class Endpoints
         // GET /todos
         builder.MapGet("/todos", async (IDocumentSession session) =>
         {
+            await Task.Delay(3000);
             var response = await session.Query<TodoListItem>().ToListAsync();
             return Results.Ok(response);
         });
@@ -51,4 +52,5 @@ public record TodoListItem
 public record TodoListCreateItem
 {
     public string Description { get; set; } = string.Empty;
+
 }
