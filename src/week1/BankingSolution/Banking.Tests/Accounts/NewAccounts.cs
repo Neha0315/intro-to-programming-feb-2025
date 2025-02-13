@@ -1,4 +1,5 @@
 ﻿
+
 using Banking.Domain;
 
 namespace Banking.Tests.Accounts;
@@ -14,11 +15,10 @@ public class NewAccounts
 
         var myBalance = myAccount.GetBalance();
         decimal yourBalance = yourAccount.GetBalance();
-        
+
         Assert.Equal(correctOpeningBalance, myBalance);
-        Assert.Equal(correctOpeningBalance, yourBalance);
+        Assert.Equal(correctOpeningBalance,yourBalance);
 
 
     }
 }
-

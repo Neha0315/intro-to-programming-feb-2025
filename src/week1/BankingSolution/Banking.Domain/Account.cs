@@ -1,22 +1,46 @@
-﻿namespace Banking.Domain;
+﻿
+
+
+namespace Banking.Domain;
+
 
 public class Account
 {
-    private decimal _openingBalance = 5000;
+    private decimal _currentBalance = 5000;
+
+    // Queries (methods where we ask for stuff)
+    public decimal GetBalance()
+    { 
+        return _currentBalance;
+    }
     public void Deposit(decimal amountToDeposit)
     {
-        _openingBalance += amountToDeposit;
+        CheckTransactionAmount(amountToDeposit);
+        _currentBalance += amountToDeposit;
     }
 
-    public decimal GetBalance()
-    {
-        // "Slime it"
-        return _openingBalance;
-    }
-
+    // Commands - telling our account to do some work.
     public void Withdraw(decimal amountToWithdraw)
     {
-        _openingBalance -= amountToWithdraw;
+        CheckTransactionAmount(amountToWithdraw);
+        if (_currentBalance >= amountToWithdraw)
+        {
+            _currentBalance -= amountToWithdraw;
+        }
+        else
+        {
+            throw new AccountOverdraftException();
+        }
+
+    }
+
+    // Helpers, etc. extracted from the above.
+    private void CheckTransactionAmount(decimal amount)
+    {
+        if (amount < 0)
+        {
+            throw new AccountNegativeTransactionAmountException();
+        }
     }
 }
 
