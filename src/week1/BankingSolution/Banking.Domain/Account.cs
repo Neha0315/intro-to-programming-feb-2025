@@ -1,9 +1,6 @@
 ﻿
 
-
 namespace Banking.Domain;
-
-
 public class Account
 {
     private decimal _currentBalance = 5000;
