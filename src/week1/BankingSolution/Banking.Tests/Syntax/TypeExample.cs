@@ -1,8 +1,17 @@
-﻿
+
 
 namespace Banking.Tests.Syntax;
 public class TypeExample
 {
+
+  [Fact]
+  public void TimeStandsStill()
+  {
+    var currentTime = DateTimeOffset.Now;
+
+    Assert.Equal(DateTimeOffset.Now, currentTime);
+  }
+
     [Fact] 
     public void Demo()
     {

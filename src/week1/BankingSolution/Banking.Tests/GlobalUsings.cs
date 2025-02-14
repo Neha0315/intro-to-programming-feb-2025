@@ -1,1 +1,2 @@
-﻿global using NSubstitute;
+global using NSubstitute;
+global using Banking.Domain;

@@ -1,66 +1,69 @@
-﻿
+
 
 namespace StringCalculator;
 public class CalculatorTests
 {
-    [Fact]
-    public void EmptyStringReturnsZero()
-    {
-        var calculator = new Calculator();
-
-        var result = calculator.Add("");
-
-        Assert.Equal(0, result);
-    }
+  private Calculator calculator = new Calculator(Substitute.For<ILogger>(), Substitute.For<IWebService>());
 
 
-    [Theory]
-    [InlineData("", 0)]
-    [InlineData("1", 1)]
-    [InlineData("2", 2)]
+  [Fact]
+  public void EmptyStringReturnsZero()
+  {
+    var result = calculator.Add("");
+    Assert.Equal(0, result);
+  }
 
-    public void SingleDigit(string value, int expected)
-    {
-        var calculator = new Calculator();
-        var result = calculator.Add(value);
+  [Theory]
+  [InlineData("1", 1)]
+  [InlineData("2", 2)]
+  [InlineData("3", 3)]
+  [InlineData("2080", 2080)]
+ 
 
-        Assert.Equal(expected, result);
-    }
-
-
-    [Theory]
-    [InlineData("1,2", 3)]
-    public void TwoDigit(string value, int expected)
-    {
-        var calculator = new Calculator();
-        var result = calculator.Add(value);
-        Assert.Equal(expected, result);
-    }
-
-
-    [Theory]
-    [InlineData("1,2,3", 6)]
-    [InlineData("1,2,3,4,5,6,7,8,9", 45)]
-    [InlineData("1 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ", 45)]
-
-    public void MultiDigit(string value, int expected)
-    {
-        var calculator = new Calculator();
-        var result = calculator.Add(value);
-        Assert.Equal(expected, result);
-    }
-
+  public void SingleDigit(string numbers, int expected)
+  {
     
 
-    [Theory]
-    [InlineData("1\n2", 3)]
-    [InlineData("1\n2,3", 6)]
-    public void TestForBackslashN(string value, int expected)
-    {
-        var calculator = new Calculator();
-        var result = calculator.Add(value);
-        Assert.Equal(expected, result);
-    }
+    var result = calculator.Add(numbers);
+
+    Assert.Equal(expected, result);
+  }
+  [Theory]
+  [InlineData("1,2", 3)]
+  [InlineData("10,21", 31)]
+  [InlineData("202,120", 322)]
+  public void TwoDigits(string numbers, int expected)
+  {
+   
+
+    var result = calculator.Add(numbers);
+
+    Assert.Equal(expected, result);
+  }
+
+  [Theory]
+  [InlineData("1,2,3", 6)]
+ 
+  public void ArbitraryDigits(string numbers, int expected)
+  {
+  
+
+    var result = calculator.Add(numbers);
+
+    Assert.Equal(expected, result);
+  }
+
+  [Theory]
+  [InlineData("1,2\n3", 6)]
+
+  public void ArbitraryMixedDelimeters(string numbers, int expected)
+  {
+  
+
+    var result = calculator.Add(numbers);
+
+    Assert.Equal(expected, result);
+  }
 
 
 }
