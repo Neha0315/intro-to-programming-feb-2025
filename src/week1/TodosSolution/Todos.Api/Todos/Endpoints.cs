@@ -1,4 +1,4 @@
-﻿using Marten;
+using Marten;
 
 namespace Todos.Api.Todos;
 
@@ -13,7 +13,9 @@ public static class Endpoints
         builder.MapGet("/todos", async (IDocumentSession session) =>
         {
             await Task.Delay(3000);
-            var response = await session.Query<TodoListItem>().ToListAsync();
+            var response = await session.Query<TodoListItem>()
+    
+          .ToListAsync();
             return Results.Ok(response);
         });
         // POST /todos
