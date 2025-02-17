@@ -1,13 +1,6 @@
 import { CurrencyPipe } from '@angular/common';
-import {
-  Component,
-  ChangeDetectionStrategy,
-  signal,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { BankService } from './services/bank.service';
-import { StatusComponent } from './components/status.component';
 import { BankStore } from './services/bank.store';
 
 @Component({
@@ -22,9 +15,11 @@ import { BankStore } from './services/bank.store';
         <a routerLink="deposit" class="btn btn-xs btn-secondary"
           >Make a Deposit</a
         >
-        <a routerLink="withdrawal" class="btn btn-xs btn-secondary"
-          >Make a Withdrawal</a
-        >
+        @if (store.currentBalance() > 0) {
+          <a routerLink="withdrawal" class="btn btn-xs btn-secondary"
+            >Make a Withdrawal</a
+          >
+        }
       </p>
       <div>
         <router-outlet />

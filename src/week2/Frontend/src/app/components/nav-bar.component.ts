@@ -1,10 +1,11 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { LoginStatusComponent } from './login-status.component';
 
 @Component({
   selector: 'app-nav-bar',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink],
+  imports: [RouterLink, LoginStatusComponent],
   template: `
     <div class="navbar bg-base-100">
       <div class="navbar-start">
@@ -29,21 +30,32 @@ import { RouterLink } from '@angular/router';
             tabindex="0"
             class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
           >
-            <li><a routerLink="banking">Banking</a></li>
+            @for (link of links(); track link.path) {
+              <li>
+                <a [routerLink]="link.path">{{ link.text }}</a>
+              </li>
+            }
           </ul>
         </div>
         <a routerLink="" class="btn btn-ghost text-xl">Angular App</a>
       </div>
       <div class="navbar-center hidden lg:flex">
         <ul class="menu menu-horizontal px-1">
-          <li><a routerLink="banking">Banking</a></li>
+          @for (link of links(); track link.path) {
+            <li>
+              <a [routerLink]="link.path">{{ link.text }}</a>
+            </li>
+          }
         </ul>
       </div>
-      <div class="navbar-end">
-        <a class="btn">Login (todo)</a>
-      </div>
+      <div class="navbar-end"><app-login-status /></div>
     </div>
   `,
   styles: ``,
 })
-export class NavBarComponent {}
+export class NavBarComponent {
+  links = signal([
+    { path: 'banking', text: 'Banking' },
+    { path: 'resources', text: 'Developer Resources' },
+  ]);
+}
