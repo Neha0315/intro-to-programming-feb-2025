@@ -11,4 +11,8 @@ export class BankService {
     // business logic goes here.
     this._currentBalance.update((c) => c + amount);
   }
+
+  public withdraw(amount: number) {
+    this._currentBalance.update((c) => c - amount);
+  }
 }
