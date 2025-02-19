@@ -1,6 +1,8 @@
 import { JsonPipe } from '@angular/common';
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ResourceStore } from '../services/resource.store';
+import { ResourceListItemCreateModel } from '../types';
 
 @Component({
   selector: 'app-resources-create',
@@ -75,6 +77,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
   styles: ``,
 })
 export class CreateComponent {
+  store = inject(ResourceStore);
   form = new FormGroup({
     title: new FormControl<string>('', { nonNullable: true }),
     description: new FormControl<string>('', { nonNullable: true }),
@@ -84,8 +87,8 @@ export class CreateComponent {
   });
 
   addItem() {
-    // only do this if it is valid, follows all the rules, etc.
-    // send it to our API to add it.
-    console.log(this.form.value);
+    const itemToSend = this.form
+      .value as unknown as ResourceListItemCreateModel;
+    this.store.add(itemToSend);
   }
 }

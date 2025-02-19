@@ -8,3 +8,8 @@ export type ResourceListItem = {
   createdOn: string;
   tags: string[];
 };
+
+export type ResourceListItemCreateModel = Omit<
+  ResourceListItem,
+  'id' | 'createdOn' | 'createdBy' | 'tags'
+> & { tags: string };
