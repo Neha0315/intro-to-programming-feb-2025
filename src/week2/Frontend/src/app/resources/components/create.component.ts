@@ -28,6 +28,21 @@ import { ResourceListItemCreateModel } from '../types';
           />
         </label>
       </div>
+      @let titlef = form.controls.title;
+      @if (titlef.invalid && (titlef.dirty || titlef.touched)) {
+        <div class="alert alert-error">
+          @if (titlef.hasError('required')) {
+            <p>We need a title to display for this resource.</p>
+          }
+          @if (titlef.hasError('minlength')) {
+            @let mlError = titlef.getError('minlength');
+            <p>This must be at least {{ mlError['requiredLength'] }} letters</p>
+          }
+          @if (titlef.hasError('maxlength')) {
+            <p>This can't be more than 100 characters</p>
+          }
+        </div>
+      }
       <div class="form-control">
         <label for="description" class="label"
           >Description:
@@ -51,6 +66,14 @@ import { ResourceListItemCreateModel } from '../types';
           />
         </label>
       </div>
+      @let linkf = form.controls.link;
+      @if (linkf.invalid && (linkf.dirty || linkf.touched)) {
+        <div class="alert alert-error">
+          @if (linkf.hasError('required')) {
+            <p>A link is required</p>
+          }
+        </div>
+      }
       <div class="form-control">
         <label for="linkText" class="label"
           >Link Text:
@@ -61,24 +84,24 @@ import { ResourceListItemCreateModel } from '../types';
             class="input input-bordered"
             formControlName="linkText"
           />
-          @let ltf = form.controls.linkText;
-          @if (ltf.invalid && (ltf.dirty || ltf.touched)) {
-            <div class="alert alert-error">
-              @if (ltf.hasError('required')) {
-                <p>You have to give us some text to show with the link</p>
-              }
-              @if (ltf.hasError('minlength')) {
-                @let mlError = ltf.getError('minlength');
-                <p>
-                  This must be at least {{ mlError['requiredLength'] }} letters
-                </p>
-              }
-              @if (ltf.hasError('maxlength')) {
-                <p>This can't be more than 20 characters</p>
-              }
-            </div>
-          }
         </label>
+        @let ltf = form.controls.linkText;
+        @if (ltf.invalid && (ltf.dirty || ltf.touched)) {
+          <div class="alert alert-error">
+            @if (ltf.hasError('required')) {
+              <p>You have to give us some text to show with the link</p>
+            }
+            @if (ltf.hasError('minlength')) {
+              @let mlError = ltf.getError('minlength');
+              <p>
+                This must be at least {{ mlError['requiredLength'] }} letters
+              </p>
+            }
+            @if (ltf.hasError('maxlength')) {
+              <p>This can't be more than 20 characters</p>
+            }
+          </div>
+        }
       </div>
       <div class="form-control">
         <label for="tags" class="label"
@@ -99,9 +122,6 @@ import { ResourceListItemCreateModel } from '../types';
 })
 export class CreateComponent {
   store = inject(ResourceStore);
-  /* RuleFor(m => m.Title).NotEmpty().MinimumLength(3).MaximumLength(100);
- RuleFor(m => m.Link).NotEmpty();
- RuleFor(m => m.LinkText).NotEmpty().MinimumLength(3).MaximumLength(20); */
 
   form = new FormGroup({
     title: new FormControl<string>('', {
