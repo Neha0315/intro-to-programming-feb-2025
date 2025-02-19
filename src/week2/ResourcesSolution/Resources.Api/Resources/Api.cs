@@ -52,8 +52,8 @@ public class Api(IValidator<ResourceListItemCreateModel> validator, IDocumentSes
       CreatedOn = DateTimeOffset.Now,
     };
 
-    session.Store(entityToSave);
-    await session.SaveChangesAsync();
+    //session.Store(entityToSave);
+    //await session.SaveChangesAsync();
 
 
 
