@@ -4,3 +4,14 @@ GET {{Resources.Api_HostAddress}}/resources
 Accept: application/json
 
 ###
+
+POST {{Resources.Api_HostAddress}}/resources
+Content-Type: application/json
+
+{
+  "title": "NGRX Docs Site",
+  "description": "SignalStore, Store, Etc.",
+  "link": "https://ngrx.io",
+  "linkText": "NGRX",
+  "tags": ["Angular", "State", "Redux", "Signals"]
+}

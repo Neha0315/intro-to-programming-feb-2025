@@ -1,3 +1,7 @@
+using FluentValidation;
+using Marten;
+using Resources.Api.Resources;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -17,6 +21,13 @@ builder.Services.AddCors(options =>
   });
 });
 
+builder.Services.AddScoped<IValidator<ResourceListItemCreateModel>, ResourceListItemCreateModelValidations>();
+
+var connectionString = builder.Configuration.GetConnectionString("resources") ?? throw new Exception("No Connection String Found! Bailing!");
+builder.Services.AddMarten(options =>
+{
+  options.Connection(connectionString);
+});
 var app = builder.Build();
 
 app.UseCors();
