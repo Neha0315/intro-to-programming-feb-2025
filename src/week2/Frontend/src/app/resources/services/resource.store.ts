@@ -15,16 +15,20 @@ export const ResourceStore = signalStore(
     return {
       add: rxMethod<ResourceListItemCreateModel>(
         pipe(
-          mergeMap((item) =>
-            service
-              .addResource(item)
-              .pipe(tap((r) => patchState(store, addEntity(r)))),
+          mergeMap(
+            (
+              item, // mergeMap - don't cancel "inflight" requests, I need the results of each of these calls.
+            ) =>
+              service
+                .addResource(item)
+                .pipe(tap((r) => patchState(store, addEntity(r)))),
           ),
         ),
       ),
-      _load: rxMethod<void>(
+      load: rxMethod<void>(
         pipe(
           switchMap(() =>
+            // switchMap - cancel "inflight" requests, I only care about the latest one.
             service
               .getResource()
               .pipe(tap((r) => patchState(store, addEntities(r)))),
@@ -35,7 +39,7 @@ export const ResourceStore = signalStore(
   }),
   withHooks({
     onInit(store) {
-      store._load();
+      store.load();
     },
   }),
 );

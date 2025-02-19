@@ -156,6 +156,7 @@ export class CreateComponent {
 
       this.form.reset();
     } else {
+      this.form.markAllAsTouched();
       console.log('Form is invalid');
     }
   }

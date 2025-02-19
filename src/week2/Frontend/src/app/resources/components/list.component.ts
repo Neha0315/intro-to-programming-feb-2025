@@ -12,6 +12,9 @@ import { ResourceStore } from '../services/resource.store';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [LinkDocsDisplayItemComponent],
   template: `
+    <button (click)="store.load()" class="btn btn-primary">
+      Reload The Data
+    </button>
     <div class="flex gap-4">
       @for (link of store.entities(); track link.id) {
         <app-link-docs-display-item [link]="link" />

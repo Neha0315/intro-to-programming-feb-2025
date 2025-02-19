@@ -20,6 +20,7 @@ public record ResourceListItemModel
   public string Title { get; set; } = string.Empty;
   public string Description { get; set; } = string.Empty;
   public string Link { get; set; } = string.Empty;
+  public string LinkText { get; set; } = string.Empty;
   public string CreatedBy { get; set; } = string.Empty;
   public DateTimeOffset CreatedOn { get; set; }
   public List<string> Tags { get; set; } = new();

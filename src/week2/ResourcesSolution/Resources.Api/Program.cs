@@ -27,7 +27,7 @@ var connectionString = builder.Configuration.GetConnectionString("resources") ??
 builder.Services.AddMarten(options =>
 {
   options.Connection(connectionString);
-});
+}).UseLightweightSessions();
 var app = builder.Build();
 
 app.UseCors();

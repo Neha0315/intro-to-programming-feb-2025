@@ -11,4 +11,5 @@ public class ResourceListItemEntity
 
   public DateTimeOffset CreatedOn { get; set; }
   public string CreatedBy { get; set; } = string.Empty;
+
 }
