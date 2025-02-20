@@ -27,15 +27,20 @@ namespace Resources.Api.Resources;
 //}
 
 [Mapper]
-public static partial class EnityMappers
+public static partial class EntityMappers
 {
 
-  [MapperIgnoreTarget(nameof(ResourceListItemEntity.Id))]
-  [MapperIgnoreTarget(nameof(ResourceListItemEntity.CreatedOn))]
-  [MapperIgnoreTarget(nameof(ResourceListItemEntity.CreatedBy))]
 
+
+  [MapperIgnoreTarget(nameof(ResourceListItemEntity.CreatedBy))]
+  [MapValue(nameof(ResourceListItemEntity.Id), Use = nameof(EntityMappers.GetUniqueId))]
+  [MapValue(nameof(ResourceListItemEntity.CreatedOn), Use = nameof(EntityMappers.GetCreatedBy))]
   public static partial ResourceListItemEntity MapFromRequestModel(this ResourceListItemCreateModel model);
   public static partial ResourceListItemModel MapToResponse(this ResourceListItemEntity entity);
 
   public static partial IQueryable<ResourceListItemModel> ProjectToResponse(this IQueryable<ResourceListItemEntity> entity);
+
+  static Guid GetUniqueId() => Guid.NewGuid();
+
+  static DateTimeOffset GetCreatedBy() => DateTimeOffset.UtcNow;
 }

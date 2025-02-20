@@ -35,11 +35,9 @@ public class Api(IValidator<ResourceListItemCreateModel> validator, IDocumentSes
     }
 
     var entityToSave = request.MapFromRequestModel();
-    entityToSave.Id = Guid.NewGuid();
+   
     entityToSave.CreatedBy = await userInfo.GetUserNameAsync();
-    entityToSave.CreatedOn = DateTimeOffset.Now;
-
-
+   
     session.Store(entityToSave);
     await session.SaveChangesAsync();
 
