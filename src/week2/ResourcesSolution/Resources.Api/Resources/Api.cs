@@ -54,4 +54,12 @@ public class Api(IValidator<ResourceListItemCreateModel> validator, IDocumentSes
     // TODO: Consider making this a 201 Created. More "nuanced".
     return Ok(response);
   }
+
+  // GET /resources/3898398039=93898398983-39879839
+  [HttpGet("/resources/{id:guid}")]
+  public async Task<ActionResult> GetById(Guid id)
+  {
+    
+    return Ok();
+  }
 }

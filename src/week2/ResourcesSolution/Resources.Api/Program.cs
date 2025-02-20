@@ -39,6 +39,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthorization();
 
+// This uses "reflection" to scan our entire project and create the route table based on attributes.
 app.MapControllers();
 
 app.Run();
