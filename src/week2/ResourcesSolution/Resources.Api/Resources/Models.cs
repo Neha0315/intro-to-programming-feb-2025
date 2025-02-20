@@ -29,7 +29,7 @@ public record ResourceListItemModel
 
 // {"title":"Some title","description":"Some Description","link":"https://wwww.microsoft.com","linkText":"Microsoft","tags":["where","do","you","want","to","go","today"]}
 
-public class ResourceListItemCreateModel
+public record ResourceListItemCreateModel
 {
   public string Title { get; set; } = string.Empty;
   public string Description { get; set; } = string.Empty;
@@ -38,9 +38,9 @@ public class ResourceListItemCreateModel
   public List<string> Tags { get; set; } = new();
 }
 
-public class ResourceListItemCreateModelValidations : AbstractValidator<ResourceListItemCreateModel>
+public class ResourceListItemCreateModelValidationsService : AbstractValidator<ResourceListItemCreateModel>
 {
-  public ResourceListItemCreateModelValidations()
+  public ResourceListItemCreateModelValidationsService()
   {
     RuleFor(m => m.Title).NotEmpty().MinimumLength(3).MaximumLength(100);
     RuleFor(m => m.Link).NotEmpty();

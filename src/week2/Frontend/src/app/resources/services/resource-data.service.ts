@@ -3,6 +3,7 @@ import { inject } from '@angular/core';
 import { ResourceListItem, ResourceListItemCreateModel } from '../types';
 import { environment } from '../../../environments/environment';
 import { tagMaker } from './tagmaker';
+
 export class ResourceDataService {
   private readonly URL = environment.apiUrl;
 

@@ -23,7 +23,7 @@ public class Api(IValidator<ResourceListItemCreateModel> validator, IDocumentSes
   }
 
   [HttpPost("/resources")]
-  public async Task<ActionResult> AddResourceItem([FromBody] ResourceListItemCreateModel request)
+  public async Task<ActionResult> AddResourceItem([FromBody] ResourceListItemCreateModel request, [FromServices] UserInformationProvider userInfo)
   {
 
     await Task.Delay(3000);
@@ -36,7 +36,7 @@ public class Api(IValidator<ResourceListItemCreateModel> validator, IDocumentSes
 
     var entityToSave = request.MapFromRequestModel();
     entityToSave.Id = Guid.NewGuid();
-    entityToSave.CreatedBy = "sue@aol.com";
+    entityToSave.CreatedBy = await userInfo.GetUserNameAsync();
     entityToSave.CreatedOn = DateTimeOffset.Now;
 
 
@@ -63,3 +63,13 @@ public class Api(IValidator<ResourceListItemCreateModel> validator, IDocumentSes
     return Ok();
   }
 }
+
+
+public class UserInformationProvider
+{
+  public async Task<string> GetUserNameAsync()
+  {
+    return "babs@aol.com"; // for now.
+  }
+}
+

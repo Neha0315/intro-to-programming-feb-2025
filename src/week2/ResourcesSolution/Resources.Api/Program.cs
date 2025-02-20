@@ -21,8 +21,8 @@ builder.Services.AddCors(options =>
   });
 });
 
-builder.Services.AddScoped<IValidator<ResourceListItemCreateModel>, ResourceListItemCreateModelValidations>();
-
+builder.Services.AddScoped<IValidator<ResourceListItemCreateModel>, ResourceListItemCreateModelValidationsService>();
+builder.Services.AddScoped<UserInformationProvider>(); // tells the API that if you need to inject this somewhere, (class, method) it's cool with us.
 var connectionString = builder.Configuration.GetConnectionString("resources") ?? throw new Exception("No Connection String Found! Bailing!");
 builder.Services.AddMarten(options =>
 {

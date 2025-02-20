@@ -7,6 +7,7 @@ import { ResourceDataService } from './resource-data.service';
 import { inject } from '@angular/core';
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
 
+// Higher-Ordered Function
 export const ResourceStore = signalStore(
   withDevtools('resources'),
   withEntities<ResourceListItem>(),
