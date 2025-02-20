@@ -23,7 +23,9 @@ public class Api(IValidator<ResourceListItemCreateModel> validator, IDocumentSes
   }
 
   [HttpPost("/resources")]
-  public async Task<ActionResult> AddResourceItem([FromBody] ResourceListItemCreateModel request, [FromServices] UserInformationProvider userInfo)
+  public async Task<ActionResult> AddResourceItem(
+    [FromBody] ResourceListItemCreateModel request,
+    [FromServices] UserInformationProvider userInfo)
   {
 
     await Task.Delay(3000);
@@ -34,7 +36,19 @@ public class Api(IValidator<ResourceListItemCreateModel> validator, IDocumentSes
       return BadRequest(validations.ToDictionary()); // more on that later.
     }
 
-    var entityToSave = request.MapFromRequestModel();
+    //var entityToSave = request.MapFromRequestModel();
+
+    var entityToSave = new ResourceListItemEntity
+    {
+      Id = Guid.NewGuid(),
+      Description = request.Description,
+      Title = request.Title,
+      Link = request.Link,
+      LinkText = request.LinkText,
+      Tags = request.Tags,
+      CreatedBy = await  userInfo.GetUserNameAsync(),
+      CreatedOn = DateTimeOffset.Now,
+    };
    
     entityToSave.CreatedBy = await userInfo.GetUserNameAsync();
    
