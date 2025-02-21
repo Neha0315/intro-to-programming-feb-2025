@@ -10,14 +10,20 @@ import { ResourceStore } from '../services/resource.store';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { map } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FilterComponent } from './filter-component';
+
+import { FilterComponent } from './alt-filter-component';
 
 @Component({
   selector: 'app-resources-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [LinkDocsDisplayItemComponent, RouterLink, FilterComponent],
+  imports: [
+    LinkDocsDisplayItemComponent,
+    RouterLink,
+    FilterComponent,
+    FilterComponent,
+  ],
   template: `
-    <app-resource-filter />
+    <app-resource-filter-2 />
     @if (store.filteredBy() !== null) {
       <p>Filtering By: {{ store.filteredBy() }}</p>
       <a

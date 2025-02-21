@@ -1,11 +1,6 @@
-import {
-  Component,
-  ChangeDetectionStrategy,
-  signal,
-  inject,
-} from '@angular/core';
-import { ResourceStore } from '../services/resource.store';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { ResourceStore } from '../services/resource.store';
 
 @Component({
   selector: 'app-resource-filter',
@@ -27,8 +22,7 @@ export class FilterComponent {
   router = inject(Router);
   changeTheFilter(event: any): void {
     // big old code smell here, yo.
-    this.router.navigate(['/resources/list'], {
-      // TODO: Fix this, Jeff
+    this.router.navigate([], {
       queryParams: { filter: event.target.value },
     });
   }

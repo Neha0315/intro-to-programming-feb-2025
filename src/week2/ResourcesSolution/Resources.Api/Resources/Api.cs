@@ -38,6 +38,13 @@ public class Api(IValidator<ResourceListItemCreateModel> validator, IDocumentSes
 
     //var entityToSave = request.MapFromRequestModel();
 
+    if (request.Tags.Any(t => t == "security"))
+    {
+      // send an HTTP request to an API that doesn't even exist yet, and take the code that doesn't exist yet, and store it in the database
+      // and add a property to the response that says "pendingSecurityReview"
+    }
+
+
     var entityToSave = new ResourceListItemEntity
     {
       Id = Guid.NewGuid(),
@@ -61,8 +68,8 @@ public class Api(IValidator<ResourceListItemCreateModel> validator, IDocumentSes
     // Mapping from ResourceListItemEntity to ResourceListItemModel
   
     var response = entityToSave.MapToResponse();
-   
 
+ 
     // TODO: Consider making this a 201 Created. More "nuanced".
     return Ok(response);
   }
