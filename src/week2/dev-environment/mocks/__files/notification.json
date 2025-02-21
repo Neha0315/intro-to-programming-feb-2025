@@ -1,0 +1,10 @@
+{{#formatJson}}
+  
+        {
+            "notificationId": "{{randomValue type='UUID'}}",
+            "resourceId": "{{randomValue type='UUID'}}"
+        }
+  
+
+   
+{{/formatJson}}

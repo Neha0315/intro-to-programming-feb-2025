@@ -24,6 +24,7 @@ public record ResourceListItemModel
   public string CreatedBy { get; set; } = string.Empty;
   public DateTimeOffset CreatedOn { get; set; }
   public List<string> Tags { get; set; } = new();
+  public bool IsBeingReviewedForSecurity { get; set; } = false;
 
 }
 

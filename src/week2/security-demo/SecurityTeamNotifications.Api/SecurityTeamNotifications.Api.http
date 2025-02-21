@@ -1,0 +1,8 @@
+@SecurityTeamNotifications.Api_HostAddress = http://localhost:1339
+
+
+###
+
+GET {{SecurityTeamNotifications.Api_HostAddress}}/bulletins
+
+###

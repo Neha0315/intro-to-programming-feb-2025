@@ -1,0 +1,11 @@
+{
+    "request": {
+        "method": "POST",
+        "url": "/locations-notifications"
+    }, 
+    "response": {
+        "status": 201,
+        "transformers": ["response-template"],
+        "bodyFileName":  "notification.json"
+    }
+}

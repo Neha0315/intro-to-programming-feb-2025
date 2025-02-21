@@ -25,10 +25,11 @@ public class Api(IValidator<ResourceListItemCreateModel> validator, IDocumentSes
   [HttpPost("/resources")]
   public async Task<ActionResult> AddResourceItem(
     [FromBody] ResourceListItemCreateModel request,
-    [FromServices] UserInformationProvider userInfo)
+    [FromServices] UserInformationProvider userInfo,
+  [FromServices] INotifytheSecurityReviewTeam _securityReviewTeam)
   {
 
-    await Task.Delay(3000);
+
     var validations = await validator.ValidateAsync(request);
 
     if (validations.IsValid == false)
@@ -36,41 +37,39 @@ public class Api(IValidator<ResourceListItemCreateModel> validator, IDocumentSes
       return BadRequest(validations.ToDictionary()); // more on that later.
     }
 
-    //var entityToSave = request.MapFromRequestModel();
 
+    var entityToSave = request.MapFromRequestModel();
+
+   
+    entityToSave.CreatedBy = await userInfo.GetUserNameAsync();
+
+    // Distributed Transaction - Both of these things have to happen or neither of them should.
+    // "Transactional Outbox"
+    // 
     if (request.Tags.Any(t => t == "security"))
     {
       // send an HTTP request to an API that doesn't even exist yet, and take the code that doesn't exist yet, and store it in the database
       // and add a property to the response that says "pendingSecurityReview"
+      // WTCYWYH
+     
+    string securityReviewId = await _securityReviewTeam.NotifyForSecurityReview(entityToSave.Id);
+      entityToSave.SecurityReviewId = securityReviewId;
+
+      // TODO: Add Something to the Entity?
+
     }
-
-
-    var entityToSave = new ResourceListItemEntity
-    {
-      Id = Guid.NewGuid(),
-      Description = request.Description,
-      Title = request.Title,
-      Link = request.Link,
-      LinkText = request.LinkText,
-      Tags = request.Tags,
-      CreatedBy = await  userInfo.GetUserNameAsync(),
-      CreatedOn = DateTimeOffset.Now,
-    };
-   
-    entityToSave.CreatedBy = await userInfo.GetUserNameAsync();
    
     session.Store(entityToSave);
     await session.SaveChangesAsync();
 
 
-
-    // From that entity, create a response to send to the requester
-    // Mapping from ResourceListItemEntity to ResourceListItemModel
-  
     var response = entityToSave.MapToResponse();
+    if (entityToSave.SecurityReviewId != null)
+    {
+      response.IsBeingReviewedForSecurity = true;
+    }
 
  
-    // TODO: Consider making this a 201 Created. More "nuanced".
     return Ok(response);
   }
 
@@ -92,3 +91,8 @@ public class UserInformationProvider
   }
 }
 
+
+public interface INotifytheSecurityReviewTeam
+{
+  Task<string> NotifyForSecurityReview(Guid id);
+}

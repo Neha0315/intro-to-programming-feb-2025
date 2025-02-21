@@ -1,10 +1,23 @@
 using FluentValidation;
 using Marten;
 using Resources.Api.Resources;
+using Resources.Api.Resources.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+var securityUrl = builder.Configuration.GetConnectionString("security-api") ?? throw new Exception("Need a Security API Url");
+builder.Services.AddHttpClient<SecurityApi>(client =>
+{
+  client.BaseAddress = new Uri(securityUrl);
+
+}); //Any calls to the origin (server) for the security team should be done with this.
+builder.Services.AddScoped<INotifytheSecurityReviewTeam>(sp =>
+{
+  return sp.GetRequiredService<SecurityApi>(); // MAKE A NOTE OF THIS.
+
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -43,3 +56,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }

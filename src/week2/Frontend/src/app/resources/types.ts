@@ -7,6 +7,7 @@ export type ResourceListItem = {
   createdBy: string;
   createdOn: string;
   tags: string[];
+  isBeingReviewedForSecurity?: false;
 };
 
 export type ResourceListItemCreateModel = Omit<
